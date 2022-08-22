@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $(function () {
+        var signedIn = false;
+        $(".is-signed-in").click(() => {
+          signedIn = !signedIn;
+          console.log(signedIn);
+
+          if (signedIn) {
+            console.log("Step 1");
+            $(".signup-element").addClass("d-none");
+            $(".signin-element").removeClass("d-none");
+            console.log($(".signup-element"));
+          } else {
+            console.log("Step 2");
+            $(".signin-element").addClass("d-none");
+            $(".signup-element").removeClass("d-none");
+            console.log($(".signup-element"));
+          }
+        });
+
+        $("#hero-section").fadeOut(1000, () => {
+          console.log("Fade in");
+        });
+        $("#hero-section").fadeIn(1000, () => {
+          console.log("Fade in");
+        });
+      });
+
+      function signin(event) {
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+        console.log(email + "  " + password);
+        if (email != "" && password != "") {
+          const xhttp = new XMLHttpRequest();
+          xhttp.onload = function () {
+            if (this.status == "200") {
+              console.log(this);
+              var result = JSON.parse(this.response);
+              if (result.status == true) {
+                document.getElementById("status").innerHTML = result.message;
+                document.getElementById("session").innerHTML = result.user;
+                console.log(result);
+                // window.location.href =
+                //   "/moonhub/employer/employer_profile.html";
+              }
+            } else {
+              console.log(this.response);
+              console.log("hI");
+            }
+          };
+          xhttp.open(
+            `GET`,
+            `moonhub.php?request=signin&email=${email}&password=${password}`
+          );
+          xhttp.send();
+        } else {
+          alert("Complete the form");
+        }
+      }
+      function signup(event) {
+        var email = document.getElementById("email").value;
+        var phone = document.getElementById("phone").value;
+        var password = document.getElementById("password").value;
+
+        console.log(email + "  " + phone + "  " + password);
+
+        if (email != "" && password != "" && phone != "") {
+          const xhttp = new XMLHttpRequest();
+          xhttp.onload = function () {
+            if (this.status == "200") {
+              var result = JSON.parse(this.response);
+              if (result.status == true) {
+                document.getElementById("status").innerHTML = result.message;
+                document.getElementById("session").innerHTML = result.user;
+              }
+            } else {
+              console.log(this.response);
+            }
+          };
+          xhttp.open(
+            `GET`,
+            `moonhub.php?request=signup&email=${email}&phone=${phone}&password=${password}`
+          );
+          xhttp.send();
+        } else {
+          alert("Complete the form");
+        }
+      }
+    </script>
+
+    <!-- CSS only -->
+    <style>
+      .gradient-text {
+        background: -webkit-linear-gradient(
+          blue,
+          rgb(137, 198, 137),
+          blue,
+          rgb(174, 132, 174)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .custom-background {
+        background-image: url("images/custom-background.png");
+      }
+    </style>
+    <link rel="stylesheet" href="modals.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://kit.fontawesome.com/c1ef7fc1d6.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="moonhub.js"></script>
+
+    <title>Document</title>
+  </head>
+  <body class="bg-white">
+    <div class="container-fluid bg-white overflow-hidden g-0">
+      <!-- Hero Section -->
+      <section
+        id="hero-section"
+        class="bg-white min-vh-100 position-relative mb-0 w-100"
+      >
+        <!-- SVG wahala -->
+
+        <!-- End of SVG wahala -->
+
+        <!-- What seems to be a Navbar -->
+        <div class="row pt-4 ms-5 w-100">
+          <div class="logo col-7 fw-bolder fs-4 text-primary">MoonHub</div>
+          <div class="col-4 d-flex align-items-center gap-5">
+            <div class="text-primary fw-bold">Apply for a job</div>
+            <div class="">
+              <button
+                type="button"
+                class="btn btn-light me-4 btn-outline-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
+                Employer
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
+                Job Seeker
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- End of THE... Navbar -->
+
+        <!-- Hero Section Content -->
+        <div class="row ms-5 align-items-center">
+          <div class="col-6">
+            <div class="row fw-bolder lh-sm" style="font-size: 3.5rem">
+              <span
+                >Hire superstar
+                <span class="gradient-text">Software engineers</span> for your
+                projects.</span
+              >
+            </div>
+            <div class="row mt-5 mb-4 w-75 me-3 ms-1">
+              Moonhub's AI-powered platform helps leading businesses source,
+              vet, and hire the world's best remote talent... all in a few days.
+            </div>
+
+            <div class="row input-group mb-3 gap-2 ms-1">
+              <input
+                class="col-6 border rounded-2"
+                type="email"
+                class="form-control"
+                placeholder="Type your email address"
+                aria-label="Email Address"
+                aria-describedby="userEmail"
+              />
+              <button
+                class="input-group-text col-3 bg-primary text-light d-flex justify-content-center rounded-2"
+                id="userEmail"
+              >
+                Talk to an Expert
+              </button>
+            </div>
+          </div>
+
+          <!-- Placeholder for the other half of the page ;-)  -->
+          <div class="col-6">
+            <div class="">
+              <img
+                src="images/hero-image.png.png"
+                alt=""
+                class="img-fluid position- top-0 h-100"
+              />
+            </div>
+          </div>
+        </div>
+        <!-- End of Hero Section Content -->
+      </section>
+
+      <!-- End of the Hero Section y'all!! It's a wrap ;) -->
+
+      <!-- Meet Employers Section -->
+
+      <section
+        id="meetEmployers"
+        class="container-fluid px-5 bg-light mx-0 mt-0 w-100"
+      >
+        <!-- Magic text *inserts moonface -->
+        <div class="row fs-3 text-center py-5">
+          <span
+            >Meet
+            <span class="d-inline gradient-text">top US employers</span> on
+            MoonHub</span
+          >
+        </div>
+
+        <!-- Weird location form thingy -->
+        <div class="d-flex justify-content-center m-auto mb-5 gap-4 w-50">
+          <div class="">
+            <div class="row">Search for</div>
+            <div class="row input-group">
+              <input
+                class="col-12 border rounded-2"
+                type="text"
+                class="form-control"
+                placeholder="Job title or keyword"
+                aria-label="Job Title"
+                aria-describedby="jobTitle"
+              />
+            </div>
+          </div>
+          <div class="col gap-1">
+            <div class="row">Working time zone</div>
+            <div class="row input-group">
+              <select
+                class="form-select py-0 w-100"
+                aria-label="Default select example"
+              >
+                <option selected>GMT +1</option>
+                <option value="1">GMT +2</option>
+                <option value="2">GMT +3</option>
+                <option value="3">GMT AGBADO</option>
+              </select>
+            </div>
+          </div>
+          <div class="gap-1">
+            <div class="row text-light">.</div>
+            <div class="row">
+              <button class="border bg-primary rounded-2 text-light">
+                Search 12580 jobs
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="row d-flex justify-content-center mt-5 mb-2">
+          FROM COMPANIES LIKE:
+        </div>
+
+        <!-- Company Logos as e dey hot -->
+        <div
+          class="d-flex justify-content-center align-content-center w-50 mx-auto gap-4 pb-5"
+        >
+          <div class="w-25 my-auto">
+            <img
+              src="images/coca-cola-png-4636.png"
+              alt=""
+              class="img-fluid"
+              max-width="100%"
+              height="auto"
+            />
+          </div>
+          <div class="w-25 my-auto">
+            <img
+              src="images/pepsi-logo-hd-4253.png"
+              alt=""
+              class="img-fluid"
+              max-width="100%"
+              max-height="100%"
+            />
+          </div>
+          <div class="w-25 my-auto">
+            <img
+              src="images/starbucks-logo-png-1667.png"
+              alt=""
+              class="img-fluid"
+              max-width="100%"
+              height="auto"
+            />
+          </div>
+          <div class="w-25 my-auto">
+            <img
+              src="images/uber-logo-png-1581.png"
+              alt=""
+              class="img-fluid"
+              max-width="100%"
+              height="auto"
+            />
+          </div>
+        </div>
+      </section>
+      <!-- End of Employer's Section -->
+
+      <!-- Talent Section -->
+      <section id="talentSection" class="mx-5">
+        <div
+          class="d-flex mt-5 fs-2 w-50 mx-auto mb-4 px-5 fw-bold justify-content-center"
+        >
+          <span
+            >We <span class="gradient-text">believe</span> the right people get
+            you to the moon and +</span
+          >
+        </div>
+
+        <!-- Item one -->
+
+        <div class="d-flex h-100 my-5 py-5">
+          <div class="w-50 mt-5 pt-5">
+            <div class="d-flex flex-column px-5 w-100 gap-3 h-100">
+              <div class="fs-2 fw-bold ps-1">Permanent Talent</div>
+              <div class="fs-5 my-5">
+                Grow your team with dedicated domain experts, who help you
+                identify the best remote talent in no time.
+              </div>
+              <div class="">
+                <button class="btn bg-primary text-light ps-1">
+                  Try Moonhub Permanent <i class="fa-solid fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="w-50 d-flex justify-content-around">
+            <img
+              src="images/moon-image-1.png"
+              alt=""
+              class="img-fluid"
+              width="75%"
+              height="75%"
+            />
+          </div>
+        </div>
+
+        <!-- Item two -->
+
+        <div class="d-flex flex-row-reverse h-100 my-5 py-5">
+          <div class="w-50 mt-5 pt-5">
+            <div class="d-flex flex-column px-5 w-100 gap-3 h-100">
+              <div class="fs-2 fw-bold ps-1">Permanent Talent</div>
+              <div class="fs-5 my-5">
+                Grow your team with dedicated domain experts, who help you
+                identify the best remote talent in no time.
+              </div>
+              <div class="">
+                <button class="btn bg-primary text-light ps-1">
+                  Try Moonhub Permanent <i class="fa-solid fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="w-50 d-flex justify-content-around">
+            <img
+              src="images/moon-image-1.png"
+              alt=""
+              class="img-fluid"
+              width="75%"
+              height="75%"
+            />
+          </div>
+        </div>
+
+        <!-- Item three -->
+        <div class="d-flex h-100 my-5 py-5">
+          <div class="w-50 mt-5 pt-5">
+            <div class="d-flex flex-column px-5 w-100 gap-3 h-100">
+              <div class="fs-2 fw-bold ps-1">Permanent Talent</div>
+              <div class="fs-5 my-5">
+                Grow your team with dedicated domain experts, who help you
+                identify the best remote talent in no time.
+              </div>
+              <div class="">
+                <button class="btn bg-primary text-light ps-1">
+                  Try Moonhub Permanent <i class="fa-solid fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="w-50 d-flex justify-content-around">
+            <img
+              src="images/moon-image-1.png"
+              alt=""
+              class="img-fluid"
+              width="75%"
+              height="75%"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- Why Choose Moonhub Section -->
+      <section id="perks" class="custom-background">
+        <!-- Heading -->
+        <div class="m-auto pt-5 text-center fs-1 fw-bold w-50">
+          Why <span class="gradient-text"> forward-thinking </span> businesses
+          choose MoonHub
+        </div>
+        <!-- perks -->
+        <div class="d-flex justify-content-around px-5 gap-5 mt-5 pt-5 mx-5">
+          <div class="text-center">
+            <div>
+              <img src="images/reason-1.png" alt="" class="img-fluid" />
+            </div>
+            <h3>Expertise and dedicated support</h3>
+            <p class="">
+              Our recruiting and HR experts are focused on helping you reach
+              your goals. Get a dedicated Moonhub recruiting team with expertise
+              in your industry, function, and stage.
+            </p>
+          </div>
+          <div>
+            <div>
+              <img src="images/reason-2.png" alt="" class="img-fluid" />
+            </div>
+            <h3>Expertise and dedicated support</h3>
+            <p class="">
+              Our recruiting and HR experts are focused on helping you reach
+              your goals. Get a dedicated Moonhub recruiting team with expertise
+              in your industry, function, and stage.
+            </p>
+          </div>
+          <div>
+            <div>
+              <img
+                src="images/reason-3.png"
+                alt=""
+                class="img-fluid d-flex justify-content-center"
+              />
+            </div>
+            <h3>Expertise and dedicated support</h3>
+            <p class="">
+              Our recruiting and HR experts are focused on helping you reach
+              your goals. Get a dedicated Moonhub recruiting team with expertise
+              in your industry, function, and stage.
+            </p>
+          </div>
+        </div>
+      </section>
+      <!-- Get in touch Section -->
+
+      <!-- Footer Section -->
+    </div>
+    <!-- Modal -->
+
+    <!-- ############################################################ -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Welcome Back!</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body p-5 pt-5">
+            <form>
+              <div class="form-floating mb-3">
+                <input
+                  type="email"
+                  class="form-control rounded-3"
+                  id="email"
+                  placeholder="name@example.com"
+                />
+                <label for="email">Email address</label>
+              </div>
+              <!-- Conditional Render -->
+              <div class="form-floating mb-3 signup-element d-none">
+                <input
+                  type="phone"
+                  class="form-control rounded-3"
+                  id="phone"
+                  placeholder="+2348012345678"
+                  minlength="11"
+                />
+                <label for="phone">Phone Number</label>
+              </div>
+              <!--  -->
+              <div class="form-floating mb-3">
+                <input
+                  type="password"
+                  class="form-control rounded-3"
+                  id="password"
+                  placeholder="Password"
+                />
+                <label for="password">Password</label>
+              </div>
+              <button
+                class="w-100 mb-2 btn btn-lg rounded-3 btn-primary signin-element"
+                id="signin-button"
+                type="button"
+                onclick="signin()"
+              >
+                Sign in
+              </button>
+              <button
+                class="w-100 mb-2 btn btn-lg rounded-3 btn-primary signup-element d-none"
+                id="signup-button"
+                type="button"
+                onclick="signup()"
+              >
+                Sign Up
+              </button>
+              <small class="text-muted"></small>
+              <hr class="my-4" />
+              <span class="signin-element">Don't Have an account?</span>
+
+              <span class="signup-element d-none"
+                >Already Have an account?</span
+              >
+
+              <button
+                class="w-100 py-2 mb-2 mt-2 btn btn-outline-primary rounded-3 signin-element is-signed-in"
+                type="button"
+              >
+                <svg class="bi me-1" width="16" height="16">
+                  <use xlink:href="#facebook" />
+                </svg>
+                Sign up for free!
+              </button>
+              <button
+                class="w-100 py-2 mb-2 mt-2 btn btn-outline-primary rounded-3 signup-element d-none is-signed-in"
+                type="button"
+              >
+                <svg class="bi me-1" width="16" height="16">
+                  <use xlink:href="#facebook" />
+                </svg>
+                Sign in instead!
+              </button>
+            </form>
+          </div>
+          <div id="status"></div>
+          <div id="session"></div>
+          <!-- <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+      crossorigin="anonymous"
+    >
+      console.log("test");
+    </script>
+  </body>
+</html>
