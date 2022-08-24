@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://use.fontawesome.com/673748c951.js"></script>
+    <script
+      src="https://kit.fontawesome.com/c1ef7fc1d6.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="../employer/dashboard/employer.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+      crossorigin="anonymous"
+    />
+    <script>
+      $(document).ready(() => {
+        $("signin").fadeOut(200);
+      });
+      function goHome() {
+        window.location.href = "/moonhub";
+      }
+    </script>
+    <style>
+      body {
+        padding-left: 7.5rem;
+        padding-top: 2rem;
+      }
+      input {
+        font-size: smaller;
+      }
+      .card-registration .select-input.form-control[readonly]:not([disabled]) {
+        font-size: 1rem;
+        line-height: 2.15;
+        padding-left: 0.75em;
+        padding-right: 0.75em;
+      }
+      .card-registration .select-arrow {
+        top: 13px;
+      }
+      .img-fluid {
+        min-height: 500px;
+        max-width: 21rem;
+        height: 70vh;
+      }
+      .test {
+        margin-left: 30px;
+      }
+      .moonhub {
+        cursor: pointer;
+      }
+    </style>
+    <title>Authentication</title>
+  </head>
+  <body class="container-fluid p-0l">
+    <div class="container-fluid bg-white overflow-hidden g-0">
+      <!-- Hero Section -->
+      <section
+        id="hero-section"
+        class="bg-white min-vh-100 position-relative mb-0 w-100"
+      >
+        <!-- SVG wahala -->
+
+        <!-- End of SVG wahala -->
+
+        <!-- What seems to be a Navbar -->
+        <div class="row pt-4 ms-5 mb-3 w-100">
+          <div
+            class="logo col-7 fw-bolder fs-4 text-primary moonhub"
+            onclick="goHome()"
+          >
+            MoonHub
+          </div>
+          <div class="col-4 d-flex align-items-center gap-5">
+            <div class="text-primary fw-bold">
+              <a href="/job_listing/job_listing.html"> Apply for a job </a>
+            </div>
+            <div class="">
+              <button
+                onclick="handleEmployer()"
+                type="button"
+                class="btn btn-light me-4 btn-outline-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
+                Employer
+              </button>
+              <button
+                onclick="handleJobSeeker()"
+                type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
+                Job Seeker
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-8">
+            <section class="h-100">
+              <div class="container">
+                <div
+                  class="row d-flex justify-content-center align-items-center"
+                >
+                  <div class="col-10">
+                    <div class="card card-registration mt-2">
+                      <div class="row g-0">
+                        <div class="col-xl-6 d-none d-xl-block">
+                          <img
+                            src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
+                            alt="Sample photo"
+                            class="img-fluid"
+                            style="
+                              border-top-left-radius: 0.25rem;
+                              border-bottom-left-radius: 0.25rem;
+                            "
+                          />
+                        </div>
+                        <div class="col-xl-6" id="signup">
+                          <div class="card-body text-black">
+                            <h3 class="mb-4 mt-3 text-uppercase text-center">
+                              Sign Up
+                            </h3>
+
+                            <div class="row">
+                              <div class="col-md-6 mb-2">
+                                <div class="form-outline">
+                                  <input
+                                    type="text"
+                                    id="firstname"
+                                    class="form-control form-control-md"
+                                    placeholder="First name"
+                                    required="true"
+                                  />
+                                </div>
+                              </div>
+                              <div class="col-md-6 mb-2">
+                                <div class="form-outline">
+                                  <input
+                                    id="lastname"
+                                    type="text"
+                                    class="form-control form-control-md"
+                                    placeholder="Last name"
+                                    required="true"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-md-6 mb-2">
+                                <div class="form-outline">
+                                  <input
+                                    type="email"
+                                    id="email"
+                                    class="form-control form-control-md"
+                                    placeholder="Email"
+                                    required="true"
+                                  />
+                                </div>
+                              </div>
+                              <div class="col-md-6 mb-2">
+                                <div class="form-outline">
+                                  <input
+                                    type="text"
+                                    id="phone"
+                                    class="form-control form-control-md"
+                                    placeholder="Phone"
+                                    required="true"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="form-outline mb-2">
+                              <input
+                                type="password"
+                                id="password"
+                                class="form-control form-control-md"
+                                placeholder="Password"
+                                required="true"
+                              />
+                            </div>
+
+                            <div
+                              class="d-md-flex justify-content-start align-items-center mb-2 py-2 gap-4"
+                            >
+                              <div class="form-outline mb-2">
+                                <input
+                                  type="text"
+                                  id="city"
+                                  class="form-control form-control-md"
+                                  placeholder="City"
+                                  required="true"
+                                />
+                              </div>
+                              <div class="form-outline mb-2">
+                                <input
+                                  type="text"
+                                  id="state"
+                                  class="form-control form-control-md"
+                                  placeholder="State"
+                                  required="true"
+                                />
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="form-outline mb-2">
+                                <input
+                                  type="text"
+                                  id="company_name"
+                                  class="form-control form-control-md"
+                                  placeholder="Company Name"
+                                  required="true"
+                                />
+                              </div>
+                            </div>
+
+                            <div class="form-outline mb-2">
+                              <input
+                                type="text"
+                                id="industry"
+                                class="form-control form-control-md"
+                                placeholder="Industry"
+                                required="true"
+                              />
+                            </div>
+
+                            <div class="form-outline mb-0">
+                              <button
+                                type="submit"
+                                class="btn btn-primary btn-opacity-75 w-100"
+                                onclick="registerEmployer()"
+                              >
+                                Register
+                              </button>
+                              <i class="text-center"
+                                >Already have an account?
+                                <a href="#" onclick="renderSignin()"
+                                  >Sign in</a
+                                ></i
+                              >
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xl-6 d-none" id="signin">
+                          <div class="card-body text-black">
+                            <h3 class="my-5 mt-3 text-uppercase text-center">
+                              Welcome Back!
+                            </h3>
+
+                            <div class="row">
+                              <div class="col-md-12 mb-4">
+                                <div class="form-outline">
+                                  <input
+                                    type="email"
+                                    id="signin-email"
+                                    class="form-control form-control-md"
+                                    placeholder="Email"
+                                    required="true"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                              <input
+                                type="password"
+                                id="signin-password"
+                                class="form-control form-control-md"
+                                placeholder="Password"
+                                required="true"
+                              />
+                            </div>
+
+                            <div class="form-outline mt-2 mb-1">
+                              <button
+                                type="submit"
+                                class="btn btn-primary btn-opacity-75 w-100"
+                                onclick="signinEmployer()"
+                              >
+                                Sign in
+                              </button>
+                              <i class="text-center"
+                                >Don't have an account?
+                                <a href="#" onclick="renderSignup()"
+                                  >Create Account</a
+                                ></i
+                              >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- JavaScript Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

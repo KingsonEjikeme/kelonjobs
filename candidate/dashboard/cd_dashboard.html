@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://use.fontawesome.com/673748c951.js"></script>
+    <script
+      src="https://kit.fontawesome.com/c1ef7fc1d6.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="candidate.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+      crossorigin="anonymous"
+    />
+    <style>
+      .container {
+        max-height: 100vh;
+      }
+      .test {
+        max-height: 100%;
+        padding-bottom: 10px;
+      }
+      ::-webkit-scrollbar {
+        width: 10px;
+        /* background-color: rgb(179, 199, 215); */
+      }
+
+      ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.5);
+      }
+      body {
+        scrollbar-width: thin;
+        scrollbar-color: blue orange;
+      }
+      .nav-link {
+        font-size: 16px;
+        /* color: grey; */
+      }
+      .employer-heading {
+        height: 73vh;
+        /* height: 73vh; */
+        /* height: 600px; */
+      }
+      .single-job-salary,
+      .single-job-date {
+        font-size: 10px;
+      }
+      .d_container {
+        max-height: 100%;
+        overflow-y: scroll;
+      }
+      #applications {
+        height: 70vh;
+      }
+      .single-job {
+        cursor: pointer;
+      }
+      .single-job-container {
+        overflow-y: scroll;
+        max-height: 100%;
+        padding-left: 25px;
+      }
+    </style>
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="mt-1 mb-4 pt-3 d-flex justify-content-between">
+        <div class="">
+          <div class="logo fw-bolder fs-4 text-primary">MoonHub</div>
+        </div>
+        <div class="user-options dropdown">
+          <button
+            class="btn btn-outline dropdown-toggle border"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <img
+              src="https://picsum.photos/200"
+              alt=""
+              class="img img-fluid rounded-circle"
+              width="30px"
+            />
+            <span id="user">Judah</span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <div>
+              <a
+                class="dropdown-item"
+                href="#profile"
+                onclick="()=>{$('#profile').click();}"
+                >Profile</a
+              >
+            </div>
+            <div>
+              <a class="dropdown-item" href="#" onclick="signout()">Log out</a>
+            </div>
+          </ul>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-2 h-100 rounded shadow bg-primary bg-opacity-10"></div>
+        <div class="col-8">
+          <nav class="shadow rounded fs-5 bg-primary bg-opacity-10">
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <button
+                class="nav-link active text-dark"
+                id="applications-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#applications"
+                type="button"
+                role="tab"
+                aria-controls="applications"
+                aria-selected="true"
+              >
+                My Applications
+              </button>
+
+              <button
+                class="nav-link text-dark"
+                id="jobs-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#jobs"
+                type="button"
+                role="tab"
+                aria-controls="jobs"
+                aria-selected="false"
+              >
+                My Jobs
+              </button>
+
+              <button
+                class="nav-link text-dark"
+                id="interviews-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#interviews"
+                type="button"
+                role="tab"
+                aria-controls="interviews"
+                aria-selected="false"
+              >
+                Interviews
+              </button>
+
+              <button
+                class="nav-link text-dark"
+                id="profile-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#profile"
+                type="button"
+                role="tab"
+                aria-controls="profile"
+                aria-selected="false"
+              >
+                Profile
+              </button>
+            </div>
+          </nav>
+          <div
+            class="tab-content border-top-0 mt-3 rounded"
+            id="nav-tabContent"
+          >
+            <!-- Applications Body -->
+            <div
+              class="tab-pane fade show active"
+              id="applications"
+              role="tabpanel"
+              aria-labelledby="applications-tab"
+            >
+              <div class="application-table">
+                <table class="table table-hover table-striped">
+                  <thead>
+                    <th>S/N</th>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Application Date</th>
+                    <th>Action</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>John Mike</td>
+                      <td>Software Tester</td>
+                      <td>Application Date</td>
+                      <td>Action Iconsm</td>
+                    </tr>
+                    <tr>
+                      <td>1</td>
+                      <td>John Mikesamms</td>
+                      <td>Software Tester</td>
+                      <td>Application Date</td>
+                      <td>Action Iconsm</td>
+                    </tr>
+                    <tr>
+                      <td>1</td>
+                      <td>John Mike</td>
+                      <td>Software Tester</td>
+                      <td>Application Date</td>
+                      <td>Action Iconsm</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- My Jobs Body -->
+            <div
+              class="tab-pane fade shadow rounded test"
+              id="jobs"
+              role="tabpanel"
+              aria-labelledby="jobs-tab"
+            >
+              <div id="my-jobs-body" class="row h-100">
+                <div class="col-3 rounded single-job-container pt-2"></div>
+                <div
+                  class="col-9 pe-1 pt-3 d-flex flex-column justify-content-center"
+                >
+                  <h3
+                    class="text-center text-decoration-underline text-primary text-opacity-50"
+                    id="d_title"
+                  >
+                    AUTOMATION SPECIALIST II
+                  </h3>
+                  <table class="table w-75 ms-4 mb-0">
+                    <tr>
+                      <td class="fw-bold">Company:</td>
+                      <td class="muted" id="d_company">Facebook</td>
+                    </tr>
+                    <tr>
+                      <td class="fw-bold">Type:</td>
+                      <td class="muted" id="d_type">Remote</td>
+                    </tr>
+                    <tr>
+                      <td class="fw-bold">Salary:</td>
+                      <td class="muted" id="d_salary">$50,000</td>
+                    </tr>
+                    <tr>
+                      <td class="fw-bold">Date Posted:</td>
+                      <td class="muted" id="d_posted">2022-04-05</td>
+                    </tr>
+                    <tr>
+                      <td class="fw-bold">Location:</td>
+                      <td class="muted" id="d_location">On-site</td>
+                    </tr>
+                    <tr>
+                      <td class="fw-bold">Requirement:</td>
+                      <td class="muted" id="d_requirements">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Quaerat ullam non incidunt quo assumenda possimus eius
+                        laborum sunt cupiditate? Neque!
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="fw-bold">Deadline:</td>
+                      <td class="muted" id="d_deadline">2022-05-06</td>
+                    </tr>
+                  </table>
+                  <div class="d-flex justify-content-end me-5 gap-2 mt-1">
+                    <button class="btn btn-warning btn-opacity-75">
+                      Apply
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interviews Body -->
+            <div
+              class="tab-pane fade show"
+              id="interviews"
+              role="tabpanel"
+              aria-labelledby="interviews-tab"
+            >
+              Interviews
+            </div>
+
+            <!-- Profile Body -->
+            <div
+              class="tab-pane fade show"
+              id="profile"
+              role="tabpanel"
+              aria-labelledby="profile-tab"
+            >
+              <!-- <section id="employer-heading-section"> -->
+
+              <!-- </section> -->
+
+              <!-- Profile Section -->
+              <div
+                class="employer-heading text-center mt-4 gap-5 border rounded-3 p-3 shadow"
+              >
+                <!-- <div
+          class="border border-1 border-top-0 border-start-0 border-end-0 me-0 w-100"
+        > -->
+                <div
+                  class="profile-heading d-flex justify-content-between gap-4 pb-0 mb-0"
+                >
+                  <div class="d-flex gap-2">
+                    <div class="profile-photo">
+                      <img
+                        src="https://picsum.photos/200"
+                        class="rounded-circle"
+                        width="50px"
+                        alt=""
+                      />
+                    </div>
+                    <div class="profile-title d-flex flex-column">
+                      <h5 class="mb-0 text-start" id="profile-fullname">
+                        Jane Doe
+                      </h5>
+                      <p class="text-start mt-0" id="profile-jobTitle">
+                        Job Title
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="employer-heading text-center d-flex border rounded-3 h-100 mt-2 align-items-center"
+                  >
+                    <button
+                      class="btn btn-outline-primary px-2 py-1"
+                      id="edit-profile"
+                      onclick="editProfile()"
+                    >
+                      Edit Profile
+                    </button>
+                  </div>
+                </div>
+                <!-- </div> -->
+                <hr class="mt-0" />
+                <div>
+                  <h6 class="text-start mb-0">Phone</h6>
+                  <p class="text-start text-muted" id="profile-phone">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Amet, doloribus.
+                  </p>
+                </div>
+                <div>
+                  <h6 class="text-start mb-0">Email</h6>
+
+                  <p class="text-start text-muted" id="profile-email"></p>
+                </div>
+                <div>
+                  <h6 class="text-start mb-0">Address</h6>
+                  <p class="text-start text-muted" id="profile-address">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Amet, doloribus.
+                  </p>
+                </div>
+                <div>
+                  <h6 class="text-start">Summary</h6>
+                  <p class="text-start text-muted" id="profile-summary">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Amet, doloribus.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Settings -->
+            <div
+              class="tab-pane fade show"
+              id="create-job"
+              role="tabpanel"
+              aria-labelledby="create-job-tab"
+            >
+              <div class="container mt-3 pt-3 shadow"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-2 h-100 rounded shadow bg-primary bg-opacity-10"></div>
+      </div>
+    </div>
+    <!-- JavaScript Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

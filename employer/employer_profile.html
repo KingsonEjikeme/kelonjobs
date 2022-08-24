@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script>
+      window.onload = function () {
+        let xhttp = new XMLHttpRequest();
+        xhttp.onload = function () {
+          if (this.status == "200") {
+            console.log(this);
+            var result = JSON.parse(this.response);
+            if (result.message) {
+              console.log("Working");
+            } else {
+              console.log("Not Working");
+            }
+            if (result.status == true) {
+              console.log("1.." + this);
+              document.getElementById("profile-fullname").innerHTML =
+                result.message.firstname + " " + result.message.lastname;
+              document.getElementById("profile-name").innerHTML =
+                result.message.firstname;
+              document.getElementById("profile-companyname").innerHTML =
+                result.message.company_name;
+              document.getElementById("profile-phone-body").innerHTML =
+                result.message.phone;
+              document.getElementById("profile-email").innerHTML =
+                result.message.email;
+              document.getElementById("profile-address").innerHTML =
+                result.message.city + ", " + result.message.state;
+              document.getElementById("profile-industry").innerHTML =
+                result.message.industry;
+
+              document
+                .getElementById("profile-email-input")
+                .setAttribute("placeholder", result.message.email);
+              console.log("It is true");
+            } else {
+              console.log("2...");
+              window.location.href = "/moonhub/moonhub.html";
+            }
+          } else {
+            console.log("3...");
+          }
+        };
+        xhttp.open("GET", "../moonhub.php?request=profile");
+        xhttp.send();
+        console.log("Profile page");
+      };
+      function signout() {
+        let xhttp = new XMLHttpRequest();
+        xhttp.onload = function () {
+          window.location.href = "/moonhub/moonhub.html";
+        };
+        xhttp.open("GET", "../moonhub.php?request=signout");
+        xhttp.send();
+      }
+    </script>
+    <style>
+      html {
+        box-sizing: border-box;
+      }
+      .employer-heading {
+        width: 50vw;
+        margin-left: 25vw;
+        margin-right: 25vw;
+      }
+      .gradient-text {
+        background: -webkit-linear-gradient(
+          blue,
+          rgb(137, 198, 137),
+          blue,
+          rgb(174, 132, 174)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .custom-background {
+        background-image: url("images/custom-background.png");
+      }
+    </style>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+      crossorigin="anonymous"
+    />
+    <script src="https://use.fontawesome.com/673748c951.js"></script>
+    <script
+      src="https://kit.fontawesome.com/c1ef7fc1d6.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>moonhub</title>
+  </head>
+  <body>
+    <div class="container-fluid bg-white g-0">
+      <section
+        id="hero-section"
+        class="bg-white min-vh-100 position-relative mb-0"
+      >
+        <div class="d-flex pt-4 w-100 justify-content-between px-3 ps-5">
+          <div class="logo fw-bolder fs-4 text-primary">MoonHub</div>
+          <div class="d-flex align-items-center gap-5">
+            <div class="text-primary fw-bold">Job Listings</div>
+            <div class="dropdown">
+              <button
+                class="btn btn-outline-light bg-primary dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton1"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="fa-solid fa-user text-light"></i>
+                <span id="profile-name"></span>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li onclick="signout()">
+                  <a class="dropdown-item" href="#">Sign out</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- <section id="employer-heading-section"> -->
+        <div
+          class="employer-heading text-center mt-5 d-flex justify-content-between gap-5 border rounded-3 p-3 shadow"
+        >
+          <h3>Recruiter Profile</h3>
+          <button class="btn btn-primary">Edit Profile</button>
+        </div>
+        <!-- </section> -->
+
+        <!-- Profile Section -->
+        <div
+          class="employer-heading text-center mt-4 gap-5 border rounded-3 p-3 shadow"
+        >
+          <!-- <div
+            class="border border-1 border-top-0 border-start-0 border-end-0 me-0 w-100"
+          > -->
+          <div class="profile-heading d-flex gap-4 pb-0 mb-0">
+            <div class="profile-photo">
+              <img
+                src="https://picsum.photos/200"
+                class="rounded-circle"
+                width="50px"
+                alt=""
+              />
+            </div>
+            <div class="profile-title d-flex flex-column">
+              <h5 class="mb-0 text-start" id="profile-fullname">Jane Doe</h5>
+              <p class="text-start mt-0" id="profile-companyname">
+                Company Name
+              </p>
+            </div>
+          </div>
+          <!-- </div> -->
+          <hr class="mt-0" />
+          <div>
+            <h6 class="text-start mb-0">Phone</h6>
+            <p class="text-start text-muted" id="profile-phone-body">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet,
+              doloribus.
+            </p>
+          </div>
+          <div>
+            <h6 class="text-start mb-0">Email</h6>
+            <!-- <input
+              type="text"
+              placeholder="Hello"
+              class="d-flex border-0"
+              id="profile-email-input"
+            /> -->
+            <p class="text-start text-muted" id="profile-email"></p>
+          </div>
+          <div>
+            <h6 class="text-start mb-0">Address</h6>
+            <p class="text-start text-muted" id="profile-address">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet,
+              doloribus.
+            </p>
+          </div>
+          <div>
+            <h6 class="text-start">Industry</h6>
+            <p class="text-start text-muted" id="profile-industry">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet,
+              doloribus.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- JavaScript Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
