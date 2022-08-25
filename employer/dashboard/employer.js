@@ -51,16 +51,14 @@ function renderSignup(){
 function signinEmployer(){
     let email = $('#signin-email').val();
     let password = $('#signin-password').val();
-    $.post("/moonhub/moonhub.php?request=signinEmployer",{
+    $.post("../../moonhub.php?request=signinEmployer",{
         signinEmail:email,
         signinPassword:password,
         action: "signinEmployer"
     }, function(data, status){
         console.log(data); //check
         var message = JSON.parse(data).message.recruiter_id;
-        document.cookie = "recruiter_id="+message;
-        console.log(document.cookie);
-        console.log(message);
+      
         if(message){
             console.log(message);
             window.location.href = "/moonhub/employer/dashboard/em_dashboard.html";

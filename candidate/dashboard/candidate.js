@@ -16,8 +16,6 @@ function signinCandidate(){
     }, function(data, status){
         console.log(data); //check
         var message = JSON.parse(data).message;
-        // document.cookie = "candidate_id="+message;
-        // console.log(document.cookie);
         console.log(message);
         if(message){
             console.log(message);
@@ -86,7 +84,7 @@ function displayJobDetail(param){
 function signout() {
     let xhttp = new XMLHttpRequest();
     xhttp.onload = function () {
-      window.location.href = "/moonhub/moonhub.html";
+      window.location.href = "/moonhub/index.html";
     };
     xhttp.open("GET", "../../../moonhub.php?request=signout");
     xhttp.send();
@@ -111,11 +109,12 @@ function editProfile(){
     
 }
 
-$(document).ready(function(){
+$(document).load(function(){
+    console.log("First check");
     // Jobs List Element Function
     function listJobElements(Jobs) {
         var jobElement = ``;
-
+        console.log('3'); //check
         Jobs.forEach(job => {
             jobElement += `<div
             class="border p-2 job bg-light my-1 rounded shadow single-job"
@@ -150,10 +149,10 @@ $(document).ready(function(){
     
         let xhttp = new XMLHttpRequest();
         xhttp.onload = function(){
+            console.log("1"); //check
             console.log(this);
-            let employerJobs = JSON.parse(this.response).message ;
-            console.log(employerJobs);
-            listJobElements(employerJobs);
+            // let employerJobs = JSON.parse(this.response).message ;
+            // listJobElements(employerJobs);
             
         };
         xhttp.open('GET', '../../moonhub.php?request=candidatejobs');
@@ -164,24 +163,15 @@ $(document).ready(function(){
     // Fetch Applications from the database
     let xhttp1 = new XMLHttpRequest();
     xhttp1.onload = function(){
-        console.log("2");
+        console.log("Hi"); //check
     };
     xhttp1.open('GET', '../../moonhub.php?request=candidateapplications');
     xhttp1.send();
 
-    // Fetch Tasks from the database
-    // let xhttp2 = new XMLHttpRequest();
-    // xhttp2.onload = function(){
-    //     console.log(this);
-    // };
-    // xhttp2.open('GET', '../../moonhub.php?request=employertask');
-    // xhttp2.send();
-
-    // Fetch Profile from the database
+    //  Fetch profile
     let xhttp3 = new XMLHttpRequest();
     xhttp3.onload = function(){
-        console.log("1");
-        console.log(this);
+ 
         let profile = JSON.parse(this.response).message;
         console.log(profile);
         let firstname = profile.firstname;
@@ -200,11 +190,9 @@ $(document).ready(function(){
         $("#profile-company").text(company);
         console.log($("#profile-email").html());
     };
-    // xhttp3.open('GET', 'moonhub/moonhub.php?request=candidateprofile');
     xhttp3.open('GET', '../../moonhub.php?request=candidateprofile');
     xhttp3.send();
 
-    // Handle Signout
 
 
 

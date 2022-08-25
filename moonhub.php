@@ -3,13 +3,15 @@ session_start();
 
 $errors = [];
 $data = [];
-if ($_GET['request'] == 'signin') {
-    $database = "kelon";
-    $username = "root";
-    $password = "";
-    $host = "localhost";
+$database = "kelon";
+$username = "root";
+$password = "";
+$host = "localhost";
 
-    $connection = mysqli_connect($host, $username, $password, $database);
+$connection = mysqli_connect($host, $username, $password, $database);
+
+if ($_GET['request'] == 'signin') {
+
     if (!$connection) {
         die("Connection failed: " . mysqli_connect_error());
     } else {
@@ -49,12 +51,6 @@ if ($_GET['request'] == 'signin') {
         }
     }
 } else if ($_GET['request'] == 'signup') {
-    $database = "kelon";
-    $username = "root";
-    $password = "";
-    $host = "localhost";
-
-    $connection = mysqli_connect($host, $username, $password, $database);
     if (!$connection) {
         die("Connection failed: " . mysqli_connect_error());
     } else {
@@ -77,12 +73,6 @@ if ($_GET['request'] == 'signin') {
         $data["user"] = $_SESSION['user'];
     }
 } else if ($_GET['request'] == 'profile') {
-    $database = "kelon";
-    $username = "root";
-    $password = "";
-    $host = "localhost";
-
-    $connection = mysqli_connect($host, $username, $password, $database);
     if (!$connection) {
         die("Connection failed: " . mysqli_connect_error());
     } else {
@@ -99,14 +89,8 @@ if ($_GET['request'] == 'signin') {
         }
     }
 } else if ($_GET['request'] == 'signout') {
-    unset($_SESSION['email']);
+    unset($_SESSION['candidate_id']);
 } else if ($_GET['request'] == 'candidatesignin') {
-    $database = "kelon";
-    $username = "root";
-    $password = "";
-    $host = "localhost";
-
-    $connection = mysqli_connect($host, $username, $password, $database);
     if (!$connection) {
         die("Connection failed: " . mysqli_connect_error());
     } else {
@@ -130,8 +114,7 @@ if ($_GET['request'] == 'signin') {
 
             $data["status"] = true;
             $data["message"] = $records[0];
-            // $data["message"] = "Login successful";
-            // session_start();
+
             $_SESSION['email'] = $email;
             $_SESSION['user'] = $records[0];
             $data["user"] = $_SESSION['user'];
@@ -140,12 +123,6 @@ if ($_GET['request'] == 'signin') {
         }
     }
 } else if ($_GET['request'] == 'candidatesignup') {
-    $database = "kelon";
-    $username = "root";
-    $password = "";
-    $host = "localhost";
-
-    $connection = mysqli_connect($host, $username, $password, $database);
     if (!$connection) {
         die("Connection failed: " . mysqli_connect_error());
     } else {
@@ -165,12 +142,6 @@ if ($_GET['request'] == 'signin') {
         $data["user"] = $_SESSION['user'];
     }
 } else if ($_GET['request'] == 'jobs') {
-    $database = "kelon";
-    $username = "root";
-    $password = "";
-    $host = "localhost";
-    $connection = mysqli_connect($host, $username, $password, $database);
-
     if (!$connection) {
         die("Connection failed: " . mysqli_connect_error());
     } else 
@@ -204,11 +175,6 @@ if ($_GET['request'] == 'signin') {
         }
     }
 } else if ($_GET['request'] == 'employerjobs') {
-    $database = "kelon";
-    $username = "root";
-    $password = "";
-    $host = "localhost";
-    $connection = mysqli_connect($host, $username, $password, $database);
     // $_SESSION['recruiter_id'] = 1;
     $recruiter_id = $_SESSION['recruiter_id'];
     // echo $recruiter_id;
@@ -234,11 +200,6 @@ if ($_GET['request'] == 'signin') {
         }
     }
 } else if ($_GET['request'] == 'employerprofile') {
-    $database = "kelon";
-    $username = "root";
-    $password = "";
-    $host = "localhost";
-    $connection = mysqli_connect($host, $username, $password, $database);
     $recruiter_id = $_SESSION['recruiter_id'];
     if (!$connection) {
         die("Connection failed: " . mysqli_connect_error());
@@ -255,174 +216,129 @@ if ($_GET['request'] == 'signin') {
             $data["message"] = 'Record not found';
         }
     }
-} else if ($_POST['action'] == 'registerEmployer') {
-    $database = "kelon";
-    $username = "root";
-    $password = "";
-    $host = "localhost";
-    // Values
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
-    $email = $_POST['email'];
-    $pass = $_POST['password'];
-    $phone = $_POST['phone'];
-    $company_name = $_POST['company_name'];
-    $city = $_POST['city'];
-    $state = $_POST['state'];
-    $industry = $_POST['industry'];
+} else if (isset($_POST['action'])) {
+    if ($_POST['action'] == 'registerEmployer') {
+        $firstname = $_POST['firstname'];
+        $lastname = $_POST['lastname'];
+        $email = $_POST['email'];
+        $pass = $_POST['password'];
+        $phone = $_POST['phone'];
+        $company_name = $_POST['company_name'];
+        $city = $_POST['city'];
+        $state = $_POST['state'];
+        $industry = $_POST['industry'];
 
-    $connection = mysqli_connect($host, $username, $password, $database);
-    $query = "INSERT INTO `recruiters` (`firstname`, `lastname`, `email`, `password`, `phone`, `company_name`, `city`, `state`, `industry`) VALUES ('$firstname', '$lastname', '$email', '$pass', '$phone', '$company_name', '$city', '$state', '$industry')";
-    $result = mysqli_query($connection, $query);
-    $data['message'] = $result;
-} else if ($_POST['action'] == 'signinEmployer') {
-    $database = "kelon";
-    $username = "root";
-    $password = "";
-    $host = "localhost";
-    // Values
-
-    $email = $_POST['signinEmail'];
-    $pass = $_POST['signinPassword'];
-
-    $connection = mysqli_connect($host, $username, $password, $database);
-    $signinquery = "SELECT * from `recruiters` WHERE `email`='$email' and `password`='$pass'";
-    // echo 'alert("Hello")';
-
-    if (!$connection) {
-        die("Connection failed: " . mysqli_connect_error());
-    } else {
-
-        $query = "SELECT * FROM `recruiters` WHERE `email` = '$email' AND `password` = '$pass'";
+        $query = "INSERT INTO `recruiters` (`firstname`, `lastname`, `email`, `password`, `phone`, `company_name`, `city`, `state`, `industry`) VALUES ('$firstname', '$lastname', '$email', '$pass', '$phone', '$company_name', '$city', '$state', '$industry')";
         $result = mysqli_query($connection, $query);
-        $query_id = "SELECT `recruiter_id` FROM `recruiters` WHERE `email` = '$email' AND `password` = '$pass'";
-        $result_id = mysqli_query($connection, $query_id);
-
-        $records = [];
-
-        if (mysqli_num_rows($result) > 0) {
-            $records = [];
-            if (mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    $records = $row;
-                }
-                // $id_row = mysqli_fetch_assoc($result);
-                $_SESSION['recruiter_id'] = mysqli_fetch_column($result_id);
-                // $tst_json = $the->$recruiter_id;
-                // $_SESSION['id'] = $json_id->$recruiter_id;
-                // $data["test"] = $the_id;
-                $data["status"] = true;
-                $data["message"] = $records;
-            }
-        }
-        // $data["test"] = $the_id[0];
-        $data["status"] = true;
-        $data["message"] = $records;
-    }
-    //         $data["status"] = true;
-    //         $data["message"] = $records[0];
-    // $result = mysqli_query($connection, $signinquery);
-    // $records = [];
+        $data['message'] = $result;
+    } else if ($_POST['action'] == 'signinEmployer') {
+        $email = $_POST['signinEmail'];
+        $pass = $_POST['signinPassword'];
+        $signinquery = "SELECT * from `recruiters` WHERE `email`='$email' and `password`='$pass'";
 
 
-    // $data['message'] = mysqli_fetch_row($result);
-} else if ($_POST['action'] == 'createJob') {
-    $database = "kelon";
-    $username = "root";
-    $password = "";
-    $host = "localhost";
-    $connection = mysqli_connect($host, $username, $password, $database);
-    // Values
-
-    $jobTitle = $_POST['jobTitle'];
-    $jobSalary = $_POST['jobSalary'];
-    $jobType = $_POST['jobType'];
-    $jobLocation = $_POST['jobLocation'];
-    $companyName = $_POST['companyName'];
-    $inputDetails = $_POST['inputDetails'];
-    $deadline = $_POST['deadline'];
-    $recruiter_id = $_SESSION['recruiter_id'];
-    $empty = NULL;
-
-    $query = "INSERT INTO `jobs` (`job_title`, `salary`, `type`, `location`, `company_name`, `details`, `requirements`, `application_deadline`, `recruiter_id`, `date_posted`) VALUES ('$jobTitle', '$jobSalary', '$jobType', '$jobLocation', '$companyName', '$inputDetails', 'NULL', '$deadline', '$recruiter_id', 'current_timestamp()')";
-    // echo 'alert("Hello")';
-
-    if (!$connection) {
-        die("Connection failed: " . mysqli_connect_error());
-    } else {
-        $result = mysqli_query($connection, $query);
-
-        if ($result) {
-            $data['message'] = $result;
+        if (!$connection) {
+            die("Connection failed: " . mysqli_connect_error());
         } else {
-            $data['message'] = $result;
-        }
-    }
-} else if ($_POST['action'] == 'registerCandidate') {
-    $database = "kelon";
-    $username = "root";
-    $password = "";
-    $host = "localhost";
-    // Values
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
-    $email = $_POST['email'];
-    $pass = $_POST['password'];
-    $phone = $_POST['phone'];
-    $job_title = $_POST['job_title'];
-    $city = $_POST['city'];
-    $state = $_POST['state'];
-    $profileSummary = $_POST['profileSummary'];
 
-    $connection = mysqli_connect($host, $username, $password, $database);
-    $query = "INSERT INTO `candidates` (`firstname`, `lastname`, `email`, `password`, `phone`, `job_title`, `city`, `state`, `summary`) VALUES ('$firstname', '$lastname', '$email', '$pass', '$phone', '$job_title', '$city', '$state', '$profileSummary')";
-    $result = mysqli_query($connection, $query);
-    $data['message'] = $result;
-} else if ($_POST['action'] == 'signinCandidate') {
-    $database = "kelon";
-    $username = "root";
-    $password = "";
-    $host = "localhost";
-    // Values
-
-    $email = $_POST['signinEmail'];
-    $pass = $_POST['signinPassword'];
-
-    $connection = mysqli_connect($host, $username, $password, $database);
-    $signinquery = "SELECT * from `recruiters` WHERE `email`='$email' and `password`='$pass'";
-    // echo 'alert("Hello")';
-
-    if (!$connection) {
-        die("Connection failed: " . mysqli_connect_error());
-    } else {
-
-        $query = "SELECT * FROM `candidates` WHERE `email` = '$email' AND `password` = '$pass'";
-        $result = mysqli_query($connection, $query);
-        $query_id = "SELECT `id` FROM `candidates` WHERE `email` = '$email' AND `password` = '$pass'";
-        $result_id = mysqli_query($connection, $query_id);
-
-        $records = [];
-
-        if (mysqli_num_rows($result) > 0) {
+            $query = "SELECT * FROM `recruiters` WHERE `email` = '$email' AND `password` = '$pass'";
+            $result = mysqli_query($connection, $query);
             $records = [];
+
             if (mysqli_num_rows($result) > 0) {
-                $records = mysqli_fetch_row($result);
+                $records = [];
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $records = $row;
+                    }
 
-                $_SESSION['candidate_id'] = mysqli_fetch_column($result_id);
+                    $_SESSION['recruiter_id'] = $records['recruiter_id'];
+                    $data["status"] = true;
+                    $data["message"] = $records;
+                }
+            }
 
-                $data["status"] = true;
-                $data["message"] = $records;
+            $data["status"] = true;
+            $data["message"] = $records;
+        }
+    } else if ($_POST['action'] == 'createJob') {
+        // Values
+
+        $jobTitle = $_POST['jobTitle'];
+        $jobSalary = $_POST['jobSalary'];
+        $jobType = $_POST['jobType'];
+        $jobLocation = $_POST['jobLocation'];
+        $companyName = $_POST['companyName'];
+        $inputDetails = $_POST['inputDetails'];
+        $deadline = $_POST['deadline'];
+        $recruiter_id = $_SESSION['recruiter_id'];
+        $empty = NULL;
+
+        $query = "INSERT INTO `jobs` (`job_title`, `salary`, `type`, `location`, `company_name`, `details`, `requirements`, `application_deadline`, `recruiter_id`, `date_posted`) VALUES ('$jobTitle', '$jobSalary', '$jobType', '$jobLocation', '$companyName', '$inputDetails', 'NULL', '$deadline', '$recruiter_id', 'current_timestamp()')";
+        // echo 'alert("Hello")';
+
+        if (!$connection) {
+            die("Connection failed: " . mysqli_connect_error());
+        } else {
+            $result = mysqli_query($connection, $query);
+
+            if ($result) {
+                $data['message'] = $result;
+            } else {
+                $data['message'] = $result;
             }
         }
-        $data["status"] = true;
-        $data["message"] = $records;
+    } else if ($_POST['action'] == 'registerCandidate') {
+        // Values
+        $firstname = $_POST['firstname'];
+        $lastname = $_POST['lastname'];
+        $email = $_POST['email'];
+        $pass = $_POST['password'];
+        $phone = $_POST['phone'];
+        $job_title = $_POST['job_title'];
+        $city = $_POST['city'];
+        $state = $_POST['state'];
+        $profileSummary = $_POST['profileSummary'];
+
+        $connection = mysqli_connect($host, $username, $password, $database);
+        $query = "INSERT INTO `candidates` (`firstname`, `lastname`, `email`, `password`, `phone`, `job_title`, `city`, `state`, `summary`) VALUES ('$firstname', '$lastname', '$email', '$pass', '$phone', '$job_title', '$city', '$state', '$profileSummary')";
+        $result = mysqli_query($connection, $query);
+        $data['message'] = $result;
+    } else if ($_POST['action'] == 'signinCandidate') {
+        // Values
+
+        $email = $_POST['signinEmail'];
+        $pass = $_POST['signinPassword'];
+
+        $connection = mysqli_connect($host, $username, $password, $database);
+        $signinquery = "SELECT * from `recruiters` WHERE `email`='$email' and `password`='$pass'";
+        // echo 'alert("Hello")';
+
+        if (!$connection) {
+            die("Connection failed: " . mysqli_connect_error());
+        } else {
+
+            $query = "SELECT * FROM `candidates` WHERE `email` = '$email' AND `password` = '$pass'";
+            $result = mysqli_query($connection, $query);
+
+
+            $records = [];
+
+            if (mysqli_num_rows($result) > 0) {
+                $records = [];
+                if (mysqli_num_rows($result) > 0) {
+                    $records = mysqli_fetch_assoc($result);
+                    $_SESSION['candidate_id'] = $records['id'];
+
+                    $data["status"] = true;
+                    $data["message"] = $records;
+                }
+            }
+            $data["status"] = true;
+            $data["message"] = $records;
+        }
     }
 } else if ($_GET['request'] == 'candidatejobs') {
-    $database = "kelon";
-    $username = "root";
-    $password = "";
-    $host = "localhost";
-
     $query = "SELECT * FROM `jobs`";
     $result = mysqli_query($connection, $query);
     $records = [];
@@ -433,13 +349,8 @@ if ($_GET['request'] == 'signin') {
     }
     $data['message'] = $records;
 } else if ($_GET['request'] == 'candidateprofile') {
-    $database = "kelon";
-    $username = "root";
-    $password = "";
-    $host = "localhost";
-    $connection = mysqli_connect($host, $username, $password, $database);
     $candidate_id = $_SESSION['candidate_id'];
-    // echo $candidate_id + "kings";
+
     if (!$connection) {
         die("Connection failed: " . mysqli_connect_error());
     } else {
