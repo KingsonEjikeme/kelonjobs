@@ -6,6 +6,7 @@ function createJob(){
     let companyName = $('#inputCompany').val();
     let inputDetails = $('#inputDetails').val();
     let deadline = $('#inputDeadline').val();
+    let date_posted = new Date().toDateString();
 
     if(jobTitle !="" && jobSalary !="" && jobType !="" && jobLocation != "" && companyName != "" && inputDetails != "" && deadline != ""){
 //access database
@@ -17,6 +18,7 @@ $.post("/moonhub/moonhub.php?request=createJob",{
     companyName: companyName,
     inputDetails: inputDetails,
     deadline: deadline,
+    date_posted: date_posted,
     action: "createJob"
 },(data,status)=>{
     let result = JSON.parse(data);
@@ -51,14 +53,16 @@ function renderSignup(){
 function signinEmployer(){
     let email = $('#signin-email').val();
     let password = $('#signin-password').val();
-    $.post("../../moonhub.php?request=signinEmployer",{
+    $.post("../../moonhub/moonhub.php?request=signinEmployer",{
         signinEmail:email,
         signinPassword:password,
         action: "signinEmployer"
     }, function(data, status){
         console.log(data); //check
         var message = JSON.parse(data).message.recruiter_id;
-      
+        // document.cookie = "recruiter_id="+message;
+        // console.log(document.cookie);
+        // console.log(message);
         if(message){
             console.log(message);
             window.location.href = "/moonhub/employer/dashboard/em_dashboard.html";
@@ -167,16 +171,16 @@ $(document).ready(function(){
             <div
               class="single-job-footer d-flex justify-content-between mt-2"
             >
-              <div
+              <span
                 class="single-job-salary bg-warning bg-opacity-25 rounded px-1"
               >
                 ${job.salary}
-              </div>
-              <div
+              </span>
+              <span
                 class="single-job-date bg-warning bg-opacity-25 rounded px-1"
               >
                 ${job.date_posted}
-              </div>
+              </span>
             </div>
           </div>
             `;
@@ -208,14 +212,6 @@ $(document).ready(function(){
     };
     xhttp1.open('GET', '../../moonhub.php?request=employerapplications');
     xhttp1.send();
-
-    // Fetch Tasks from the database
-    // let xhttp2 = new XMLHttpRequest();
-    // xhttp2.onload = function(){
-    //     console.log(this);
-    // };
-    // xhttp2.open('GET', '../../moonhub.php?request=employertask');
-    // xhttp2.send();
 
     // Fetch Profile from the database
     let xhttp3 = new XMLHttpRequest();

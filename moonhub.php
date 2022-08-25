@@ -272,6 +272,7 @@ if ($_GET['request'] == 'signin') {
         $inputDetails = $_POST['inputDetails'];
         $deadline = $_POST['deadline'];
         $recruiter_id = $_SESSION['recruiter_id'];
+        $date_posted = $_POST['date_posted'];
         $empty = NULL;
 
         $query = "INSERT INTO `jobs` (`job_title`, `salary`, `type`, `location`, `company_name`, `details`, `requirements`, `application_deadline`, `recruiter_id`, `date_posted`) VALUES ('$jobTitle', '$jobSalary', '$jobType', '$jobLocation', '$companyName', '$inputDetails', 'NULL', '$deadline', '$recruiter_id', 'current_timestamp()')";

@@ -84,12 +84,42 @@ function displayJobDetail(param){
 function signout() {
     let xhttp = new XMLHttpRequest();
     xhttp.onload = function () {
-      window.location.href = "/moonhub/index.html";
+      window.location.href = "/moonhub/moonhub.html";
     };
     xhttp.open("GET", "../../../moonhub.php?request=signout");
     xhttp.send();
   }
-
+  function listJobElements(Jobs) {
+    var jobElement = ``;
+    console.log('3'); //check
+    Jobs.forEach(job => {
+        jobElement += `<div
+        class="border p-2 job bg-light my-1 rounded shadow single-job"
+        onclick="displayJobDetail(this)"
+      >
+        <input class="d-none" value="${job.job_id}"/>
+        <p class="fw-bold my-0">${job.job_title}</p>
+        <p class="muted my-0">${job.type}</p>
+        <div
+          class="single-job-footer d-flex justify-content-between mt-2"
+        >
+          <div
+            class="single-job-salary bg-warning bg-opacity-25 rounded px-1"
+          >
+            ${job.salary}
+          </div>
+          <div
+            class="single-job-date bg-warning bg-opacity-25 rounded px-1"
+          >
+            ${job.date_posted}
+          </div>
+        </div>
+      </div>
+        `;
+    });
+    $('.single-job-container').append(jobElement);
+    
+}
 function slideRight(){
     console.log("Hi");
     $('#sliding').slideRight();
@@ -109,40 +139,10 @@ function editProfile(){
     
 }
 
-$(document).load(function(){
+$(function(){
     console.log("First check");
     // Jobs List Element Function
-    function listJobElements(Jobs) {
-        var jobElement = ``;
-        console.log('3'); //check
-        Jobs.forEach(job => {
-            jobElement += `<div
-            class="border p-2 job bg-light my-1 rounded shadow single-job"
-            onclick="displayJobDetail(this)"
-          >
-            <input class="d-none" value="${job.job_id}"/>
-            <p class="fw-bold fs-5 my-0">${job.job_title}</p>
-            <p class="muted my-0">${job.type}</p>
-            <div
-              class="single-job-footer d-flex justify-content-between mt-2"
-            >
-              <div
-                class="single-job-salary bg-warning bg-opacity-25 rounded px-1"
-              >
-                ${job.salary}
-              </div>
-              <div
-                class="single-job-date bg-warning bg-opacity-25 rounded px-1"
-              >
-                ${job.date_posted}
-              </div>
-            </div>
-          </div>
-            `;
-        });
-        $('.single-job-container').append(jobElement);
-        
-    }
+    
     
     // Fetch Jobs from the database
    
@@ -150,9 +150,10 @@ $(document).load(function(){
         let xhttp = new XMLHttpRequest();
         xhttp.onload = function(){
             console.log("1"); //check
-            console.log(this);
-            // let employerJobs = JSON.parse(this.response).message ;
-            // listJobElements(employerJobs);
+            console.log(this.response);
+            let employerJobs = JSON.parse(this.response).message ;
+            listJobElements(employerJobs);
+            // listJobElements();
             
         };
         xhttp.open('GET', '../../moonhub.php?request=candidatejobs');
